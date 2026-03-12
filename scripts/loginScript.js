@@ -27,9 +27,13 @@ function registraUtente() {
         return;
       }
     }
+    /*create user id and assign it to every user that registers*/
+    const lastUserId = ;
+
     const newUser = {
       username: usernameInput,
       password: passwordInput,
+      userId: ; 
     };
 
     users.push(newUser);
