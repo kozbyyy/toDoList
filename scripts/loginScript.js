@@ -21,19 +21,12 @@ function registraUtente() {
   } else {
     const users = JSON.parse(localStorage.getItem("users")) || [];
 
-    let usernameAlreadyUsed = false;
     for (let i = 0; i < users.length; i++) {
       if (users[i].username === usernameInput) {
-        usernameAlreadyUsed = true;
-        break;
+        showMessage("Questo username esiste già, scegline un altro.");
+        return;
       }
     }
-
-    if (usernameAlreadyUsed) {
-      showMessage("Questo username esiste già, scegline un altro.");
-      return;
-    }
-
     const newUser = {
       username: usernameInput,
       password: passwordInput,
@@ -50,23 +43,17 @@ function loginUtente(){
     const passwordInput = document.getElementById("passwordBar").value;
     const users = JSON.parse(localStorage.getItem("users")) || [];
 
-    let loginOk = false;
     for (let i = 0; i < users.length; i++) {
       if (users[i].username === usernameInput && users[i].password === passwordInput) {
-        loginOk = true;
-        break;
+        localStorage.setItem("currentUser", usernameInput);
+        showMessage("Login effettuato con successo!");
+        window.setTimeout(() => {
+          window.location.href = "todopage.html";
+        }, 2200);
       }
     }
-
-    if (loginOk) {
-      localStorage.setItem("currentUser", usernameInput);
-      showMessage("Login effettuato con successo!");
-      window.setTimeout(() => {
-        window.location.href = "todopage.html";
-      }, 2200);
-    } else {
-      showMessage("Errore nel login: username o password non corretti.");
-    }
+    
+    showMessage("Errore nel login: username o password non corretti.");
 }
 
 function showMessage(message) {
