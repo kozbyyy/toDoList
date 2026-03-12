@@ -76,6 +76,15 @@ document.querySelector(".addButton")
         nuovoElemento();
     });
 
+// Logout: rimuove l'utente corrente e torna alla pagina di login
+const logoutButton = document.querySelector(".logoutButton");
+if (logoutButton) {
+    logoutButton.addEventListener("click", function () {
+        localStorage.removeItem('currentUser');
+        window.location.href = "loginHome.html";
+    });
+}
+
 /* Event listener per ogni checkbox (anche quelle create dopo) */
 container.addEventListener("change", (event) => {
     const target = event.target;
