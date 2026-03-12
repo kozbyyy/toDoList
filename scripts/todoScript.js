@@ -93,5 +93,10 @@ container.addEventListener("change", (event) => {
     }
 });
 
+const nextButton = document.querySelector(".nextButton");
+nextButton.addEventListener("click", function () {
+    window.location.href = "nextPage.html";
+});
+
 /* Carica le task salvate all'avvio */
 loadTasks();
