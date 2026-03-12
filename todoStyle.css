@@ -59,10 +59,14 @@ input[type=text] {
 button{
     background-color: lightgoldenrodyellow;
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
-    font-weight: 700;
+    font-weight: 600;
     padding: 10px;
-    border: 2px solid;
-    border-radius: 12px;
+    border: 2px solid black;
+    border-radius: 11px;
     font-size: 15px;
-    cursor: pointer
+    cursor: pointer;
+    margin-top: 10px;
+}
+.logoutButton{
+    background-color: crimson;
 }
