@@ -2,6 +2,36 @@ const container = document.getElementById('container');
 const box = document.getElementById('box');
 const currentUser = localStorage.getItem('currentUser');
 
+// Recupera l'userId associato all'utente loggato
+const users = JSON.parse(localStorage.getItem('users')) || [];
+let currentUserId = null;
+for (let i = 0; i < users.length; i++) {
+    if (users[i].username === currentUser) {
+        let currentUserObj = users[i];
+        currentUserId = currentUserObj.userId;
+        break;
+    }
+}
+
+// Carica i todo dall'API associandoli all'userId dell'utente loggato.
+// Usa solo i campi userId e title (ignora id e completed).
+async function todoAPI() {
+    if (!currentUserId) return
+    const todoAPIRequest = await fetch("https://jsonplaceholder.typicode.com/todos");
+    const data = await todoAPIRequest.json();
+    const userTodos = [];
+    for (let i = 0; i < data.length; i++) {
+        const todo = data[i];
+        if (todo.userId === currentUserId) {
+            userTodos.push(todo);
+        }
+    }
+    for (let i = 0; i < userTodos.length; i++) {
+        const todo = userTodos[i];
+        createTaskElement(todo.title);
+    }
+}
+
 // Se non c'è un utente loggato, rimanda alla pagina di login
 if (!currentUser) {
     window.location.href = "loginHome.html";
@@ -19,7 +49,12 @@ function saveAllTasks(allTasks) {
 function loadTasks() {
     const allTasks = getAllTasks();
     const savedTasks = allTasks[currentUser] || [];
-    savedTasks.forEach(taskText => createTaskElement(taskText));
+    if (savedTasks.length > 0) {
+        savedTasks.forEach(taskText => createTaskElement(taskText));
+    } else {
+        // Se non ci sono task salvate per questo utente, carica quelle dall'API
+        todoAPI();
+    }
 }
 
 /* Salva tutte le task correnti nel localStorage */

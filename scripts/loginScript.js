@@ -27,13 +27,19 @@ function registraUtente() {
         return;
       }
     }
-    /*create user id and assign it to every user that registers*/
-    const lastUserId = ;
+    /* Crea un nuovo userId numerico per ogni utente registrato */
+    let maxUserId = 0;
+    users.forEach((u) => {
+      if (typeof u.userId === "number" && u.userId > maxUserId) {
+        maxUserId = u.userId;
+      }
+    });
+    const newUserId = maxUserId + 1;
 
     const newUser = {
       username: usernameInput,
       password: passwordInput,
-      userId: ; 
+      userId: newUserId
     };
 
     users.push(newUser);
